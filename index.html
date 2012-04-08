@@ -1,0 +1,323 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>helena2unicode — convert Helena to Unicode Greek</title>
+        <style>
+            html, body {
+                min-height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            form {
+                position: static;
+                width: 100%;
+                min-height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            #input {
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 49%;
+                max-width: 49%;
+                min-width: 49%;
+                min-height: 100%;
+                margin: 0;
+                padding: 0.3em 0.5em;
+                font: 18px/1.4em Helena, serif;
+                border: none;
+                border-right: 1px solid #aaa;
+                background: #fafafa;
+
+                -webkit-box-shadow: inset 0 1px 2px 0 rgba(0,0,0,0.3);
+                -moz-box-shadow: inset 0 1px 2px 0 rgba(0,0,0,0.3);
+            }
+
+            #input::-webkit-input-placeholder  { font-family: "Times New Roman", serif; }
+            #input::-moz-placeholder { font-family: "Times New Roman", serif; }
+
+            #output {
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+
+                position: absolute;
+                top: 0;
+                left: 50%;
+                width: 49%;
+                max-width: 49%;
+                min-width: 49%;
+                min-height: 100%;
+                margin: 0;
+                padding: 0.3em 0.5em;
+                font: 18px/1.4em Times, serif;
+                border: none;
+            }
+
+            #download {
+                position: fixed;
+                bottom: 0;
+                right: 0;
+                padding-right: 1em;
+                padding-bottom: 0.5em;
+            }
+
+            #download a {
+                color: #aaa;
+                font: 10px Arial, sans;
+            }
+
+            #clearfix {
+                clear: both;
+            }
+        </style>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script>
+            /*!
+             * jQuery TextChange Plugin
+             * http://www.zurb.com/playground/jquery-text-change-custom-event
+             *
+             * Copyright 2010, ZURB
+             * Released under the MIT License
+             */
+             (function(a){a.event.special.textchange={setup:function(){a(this).data("lastValue",this.contentEditable==="true"?a(this).html():a(this).val());a(this).bind("keyup.textchange",a.event.special.textchange.handler);a(this).bind("cut.textchange paste.textchange input.textchange",a.event.special.textchange.delayedHandler)},teardown:function(){a(this).unbind(".textchange")},handler:function(){a.event.special.textchange.triggerIfChanged(a(this))},delayedHandler:function(){var c=a(this);setTimeout(function(){a.event.special.textchange.triggerIfChanged(c)},
+             25)},triggerIfChanged:function(a){var b=a[0].contentEditable==="true"?a.html():a.val();b!==a.data("lastValue")&&(a.trigger("textchange",[a.data("lastValue")]),a.data("lastValue",b))}};a.event.special.hastext={setup:function(){a(this).bind("textchange",a.event.special.hastext.handler)},teardown:function(){a(this).unbind("textchange",a.event.special.hastext.handler)},handler:function(c,b){b===""&&b!==a(this).val()&&a(this).trigger("hastext")}};a.event.special.notext={setup:function(){a(this).bind("textchange",
+             a.event.special.notext.handler)},teardown:function(){a(this).unbind("textchange",a.event.special.notext.handler)},handler:function(c,b){a(this).val()===""&&a(this).val()!==b&&a(this).trigger("notext")}}})(jQuery);
+
+            TR = {
+                // Standard characters (no modifiers)
+                "1": "1",
+                "2": "2",
+                "3": "3",
+                "4": "4",
+                "5": "5",
+                "6": "6",
+                "7": "7",
+                "8": "8",
+                "9": "9",
+                "0": "0",
+                "-": "-",
+                "=": "=",
+                "q": "\u03b8",
+                "w": "\u03c9",
+                "e": "\u03b5",
+                "r": "\u03c1",
+                "t": "\u03c4",
+                "y": "\u03c8",
+                "u": "\u03c5",
+                "i": "\u03b9",
+                "o": "\u03bf",
+                "p": "\u03c0",
+                "[": "[",
+                "]": "]",
+                "\\": "\u0300",
+                "a": "\u03b1",
+                "s": "\u03c3",
+                "d": "\u03b4",
+                "f": "\u03c6",
+                "g": "\u03b3",
+                "h": "\u03b7",
+                "j": "\u0343",
+                "k": "\u03ba",
+                "l": "\u03bb",
+                ";": ";",
+                "'": "'",
+                "z": "\u03b6",
+                "x": "\u03be",
+                "c": "\u03c7",
+                "v": "\u0311",
+                "b": "\u03b2",
+                "n": "\u03bd",
+                "m": "\u03bc",
+                ",": ",",
+                ".": ".",
+                "/": "\u0301",
+                // Shift characters
+                "!": "!",
+                "@": "@",
+                "#": null,
+                "$": null,
+                "%": null,
+                "^": "\u032d",
+                "&": null,
+                "*": "*",
+                "(": "(",
+                ")": ")",
+                "_": "_",
+                "+": "+",
+                "Q": "\u0398",
+                "W": "\u03a9",
+                "E": "\u0395",
+                "R": "\u03a1",
+                "T": "\u03a4",
+                "Y": "\u03a8",
+                "U": "\u03d2",
+                "I": "\u0399",
+                "O": "\u039f",
+                "P": "\u03a0",
+                "{": "\u27e6",
+                "}": "\u27e7",
+                "|": "\u0301",
+                "A": "\u0391",
+                "S": "\u03a3",
+                "D": "\u0394",
+                "F": "\u03a6",
+                "G": "\u0393",
+                "H": "\u0397",
+                "J": "\u0314",
+                "K": "\u039a",
+                "L": "\u039b",
+                ":": "\u0387",
+                "\"": "\"",
+                "Z": "\u0396",
+                "X": "\u039e",
+                "C": "\u03a7",
+                "V": "\u2e14", // uncertain
+                "B": "\u0392",
+                "N": "\u039d",
+                "M": "\u039c",
+                "<": "\u00ab",
+                ">": "\u00bb",
+                "?": "?",
+                // Option characters
+                "¡": "\u0313\u0301",
+                "™": "\u0313\u0311",
+                "£": "\u0313\u0300",
+                "¢": "\u0314\u0301",
+                "∞": "\u0314\u0311",
+                "§": "\u0314\u0300",
+                "¶": "\u0313\u0301",
+                "•": "\u0313\u0311",
+                "ª": "\u0313\u0300",
+                "º": "\u0314\u0301",
+                "–": "\u0314\u0311",
+                "≠": "\u0314\u0300",
+                "œ": "\u0308",
+                "∑": "\u0308\u0300",
+                "´": "\u0398\u0305\u03f9\u0305", // nominal sacra
+                "®": "\u0306",
+                "†": "\u0306",
+                "¥": "\u0306",
+                "¨": null,
+                "ˆ": null,
+                "ø": "\u0345",
+                "π": "\u00b6",
+                "“": "“",
+                "‘": "”",
+                "«": "\u0300",
+                "å": null,
+                "ß": "\u03c2",
+                "∂": "\u0323", // subdot (uncertain letter)
+                "ƒ": "\u0323", // subdot (uncertain letter)
+                "©": "\u0323", // subdot (uncertain letter)
+                "˙": "\u0343",
+                "∆": "\u1fbf",
+                "˚": "\u0314",
+                "¬": "\u02f9", // alternate reading L
+                "…": null,
+                "æ": "/",
+                "Ω": "\u03dd",
+                "≈": "\u03e1",
+                "ç": "\u03db",
+                "√": "\u0311",
+                "∫": null,
+                "˜": null,
+                "µ": null,
+                "≤": "\u0375",
+                "≥": "\uff65",
+                "÷": "\u0301",
+                // Option-shift characters
+                "⁄": "\u1fbf\u0301",
+                "€": "\u1fbf\u0311",
+                "‹": "\u1fbf\u0300",
+                "›": "\u1ffe\u0301",
+                "ﬁ": "\u1ffe\u0311",
+                "ﬂ": "\u1ffe\u0300",
+                "‡": "\u0313\u0301",
+                "°": "\u0313\u0311",
+                "·": "\u0313\u0300",
+                "‚": "\u0314\u0301",
+                "—": "\u0314\u0311",
+                "±": "\u0314\u0300",
+                "Œ": "\u0308\u0301",
+                "„": "\u0308\u0311",
+                "´": "\u0305",
+                "‰": "\u0304",
+                "ˇ": "\u0304",
+                "Á": "\u0304",
+                "¨": "\u0308",
+                "ˆ": "\u0345",
+                "Ø": "\u0345",
+                "∏": "\u2E0B", // raised square (end of missing words)
+                "”": "”",
+                "’": "’",
+                "»": "\u0300",
+                "Å": null,
+                "Í": "\u03f9",
+                "Î": "\u0325", // subcircle (very uncertain letter)
+                "Ï": "\u0325", // subcircle (very uncertain letter)
+                "˝": "\u0325", // subcircle (very uncertain letter)
+                "Ó": "\u0343",
+                "Ô": "\u1ffe",
+                "": "\u0314",
+                "Ò": "\u02fa", // alternate reading R
+                "Ú": ":",
+                "Æ": "\\",
+                "¸": "\u03d9",
+                "˛": "\u203b",
+                "Ç": "\u03da",
+                "◊": "\u0311",
+                "ı": "\u2185",
+                "˜": "{",
+                "Â": "}",
+                "¯": "\u2039",
+                "˘": "\u2040",
+                "¿": "\u0301",
+            }
+        </script>
+    </head>
+    <body>
+        <form name="convert">
+            <textarea id="input" rows="4" cols="8" name="input" placeholder="Paste Helena Greek input here"></textarea>
+            <div id="output">Unicode Greek text will be displayed here</div>
+            <div id="download"><a href="#">Download converted text…</a></div>
+            <div id="clearfix"></div>
+        </form>
+
+        <script>
+            $(document).ready(function() {
+                $('#input').bind('textchange', function(event, prevText) {
+                    var text = $('#input').val(), i, out = '';
+
+                    for (i = 0; i < text.length; i++) {
+                        out += TR[text.charAt(i)] || text.charAt(i);
+                    }
+
+                    window.out = out;
+
+                    out = out.replace(/&/g, '&amp;')
+                             .replace(/</g, '&gt;')
+                             .replace(/>/g, '&lt;')
+                             .replace(/\n/g, '<br/>');
+
+                    $('#output').html(out || 'Unicode Greek text will be displayed here');
+                });
+
+                $('#download a').click(function() {
+                    // convert to UTF-8, then Base64-encode
+                    window.open("data:text/plain;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(window.out || ''))),
+                        "Converted Document");
+                    return false;
+                });
+            });
+        </script>
+    </body>
+</html>
