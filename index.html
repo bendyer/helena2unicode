@@ -41,8 +41,8 @@
                 -moz-box-shadow: inset 0 1px 2px 0 rgba(0,0,0,0.3);
             }
 
-            #input::-webkit-input-placeholder  { font-family: "Times New Roman", serif; }
-            #input::-moz-placeholder { font-family: "Times New Roman", serif; }
+            #input::-webkit-input-placeholder  { font-family: Brill, Times, serif; }
+            #input::-moz-placeholder { font-family: Brill, Times, serif; }
 
             #output {
                 box-sizing: border-box;
@@ -58,7 +58,7 @@
                 min-height: 100%;
                 margin: 0;
                 padding: 0.3em 0.5em;
-                font: 18px/1.4em Times, serif;
+                font: 18px/1.4em Brill, Times, serif;
                 border: none;
             }
 
@@ -68,11 +68,12 @@
                 right: 0;
                 padding-right: 1em;
                 padding-bottom: 0.5em;
+                color: #aaa;
+                font: 10px Arial, sans;
             }
 
             #download a {
                 color: #aaa;
-                font: 10px Arial, sans;
             }
 
             #clearfix {
@@ -125,7 +126,7 @@
                 "f": "\u03c6",
                 "g": "\u03b3",
                 "h": "\u03b7",
-                "j": "\u0343",
+                "j": "\u0313",
                 "k": "\u03ba",
                 "l": "\u03bb",
                 ";": ";",
@@ -133,7 +134,7 @@
                 "z": "\u03b6",
                 "x": "\u03be",
                 "c": "\u03c7",
-                "v": "\u0311",
+                "v": "\u0342",
                 "b": "\u03b2",
                 "n": "\u03bd",
                 "m": "\u03bc",
@@ -189,16 +190,16 @@
                 "?": "?",
                 // Option characters
                 "¡": "\u0313\u0301",
-                "™": "\u0313\u0311",
+                "™": "\u0313\u0342",
                 "£": "\u0313\u0300",
                 "¢": "\u0314\u0301",
-                "∞": "\u0314\u0311",
+                "∞": "\u0314\u0342",
                 "§": "\u0314\u0300",
                 "¶": "\u0313\u0301",
-                "•": "\u0313\u0311",
+                "•": "\u0313\u0342",
                 "ª": "\u0313\u0300",
                 "º": "\u0314\u0301",
-                "–": "\u0314\u0311",
+                "–": "\u0314\u0342",
                 "≠": "\u0314\u0300",
                 "œ": "\u0308",
                 "∑": "\u0308\u0300",
@@ -218,7 +219,7 @@
                 "∂": "\u0323", // subdot (uncertain letter)
                 "ƒ": "\u0323", // subdot (uncertain letter)
                 "©": "\u0323", // subdot (uncertain letter)
-                "˙": "\u0343",
+                "˙": "\u0313",
                 "∆": "\u1fbf",
                 "˚": "\u0314",
                 "¬": "\u02f9", // alternate reading L
@@ -227,28 +228,28 @@
                 "Ω": "\u03dd",
                 "≈": "\u03e1",
                 "ç": "\u03db",
-                "√": "\u0311",
+                "√": "\u0342",
                 "∫": null,
                 "˜": null,
                 "µ": null,
                 "≤": "\u0375",
-                "≥": "\uff65",
+                "≥": "\u00b7",
                 "÷": "\u0301",
                 // Option-shift characters
                 "⁄": "\u1fbf\u0301",
-                "€": "\u1fbf\u0311",
+                "€": "\u1fbf\u0342",
                 "‹": "\u1fbf\u0300",
                 "›": "\u1ffe\u0301",
-                "ﬁ": "\u1ffe\u0311",
+                "ﬁ": "\u1ffe\u0342",
                 "ﬂ": "\u1ffe\u0300",
                 "‡": "\u0313\u0301",
-                "°": "\u0313\u0311",
+                "°": "\u0313\u0342",
                 "·": "\u0313\u0300",
                 "‚": "\u0314\u0301",
-                "—": "\u0314\u0311",
+                "—": "\u0314\u0342",
                 "±": "\u0314\u0300",
                 "Œ": "\u0308\u0301",
-                "„": "\u0308\u0311",
+                "„": "\u0308\u0342",
                 "´": "\u0305",
                 "‰": "\u0304",
                 "ˇ": "\u0304",
@@ -265,7 +266,7 @@
                 "Î": "\u0325", // subcircle (very uncertain letter)
                 "Ï": "\u0325", // subcircle (very uncertain letter)
                 "˝": "\u0325", // subcircle (very uncertain letter)
-                "Ó": "\u0343",
+                "Ó": "\u0313",
                 "Ô": "\u1ffe",
                 "": "\u0314",
                 "Ò": "\u02fa", // alternate reading R
@@ -274,7 +275,7 @@
                 "¸": "\u03d9",
                 "˛": "\u203b",
                 "Ç": "\u03da",
-                "◊": "\u0311",
+                "◊": "\u0342",
                 "ı": "\u2185",
                 "˜": "{",
                 "Â": "}",
@@ -288,7 +289,10 @@
         <form name="convert">
             <textarea id="input" rows="4" cols="8" name="input" placeholder="Paste Helena Greek input here"></textarea>
             <div id="output">Unicode Greek text will be displayed here</div>
-            <div id="download"><a href="#">Download converted text…</a></div>
+            <div id="download">
+                <a href="#" class="dl">Download converted text…</a> |
+                <a href="http://www.brill.nl/brill-typeface">Get recommended font</a>
+            </div>
             <div id="clearfix"></div>
         </form>
 
@@ -311,13 +315,24 @@
                     $('#output').html(out || 'Unicode Greek text will be displayed here');
                 });
 
-                $('#download a').click(function() {
+                $('#download a.dl').click(function() {
                     // convert to UTF-8, then Base64-encode
                     window.open("data:text/plain;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(window.out || ''))),
                         "Converted Document");
                     return false;
                 });
             });
+        </script>
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-32078838-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
         </script>
     </body>
 </html>
